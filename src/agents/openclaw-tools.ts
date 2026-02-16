@@ -2,6 +2,7 @@ import type { OpenClawConfig } from "../config/config.js";
 import type { GatewayMessageChannel } from "../utils/message-channel.js";
 import type { SandboxFsBridge } from "./sandbox/fs-bridge.js";
 import type { AnyAgentTool } from "./tools/common.js";
+import { createLocalLlmTool } from "./tools/local-llm-tool.js";
 import { resolvePluginTools } from "../plugins/tools.js";
 import { resolveSessionAgentId } from "./agent-scope.js";
 import { createAgentsListTool } from "./tools/agents-list-tool.js";
@@ -158,6 +159,10 @@ export function createOpenClawTools(options?: {
     ...(webSearchTool ? [webSearchTool] : []),
     ...(webFetchTool ? [webFetchTool] : []),
     ...(imageTool ? [imageTool] : []),
+    ...((() => {
+      const localLlmTool = createLocalLlmTool({ config: options?.config });
+      return localLlmTool ? [localLlmTool] : [];
+    })()),
   ];
 
   const pluginTools = resolvePluginTools({

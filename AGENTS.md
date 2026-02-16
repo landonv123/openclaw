@@ -1,5 +1,11 @@
 # Repository Guidelines
 
+> **FORK CONTEXT**: This is a personal fork of OpenClaw, customized for local LLM inference.
+> The Gateway runs on a **Mac Mini**. Models are served by a **vLLM orchestrator** running on
+> the dev machine (Windows PC, RTX 4090) at port 8010. Code is edited here, pushed to GitHub,
+> then pulled on the Mac Mini. See `FORK.md` for full architecture details and
+> `openclaw.config.example.json` for the Mac Mini config template.
+
 - Repo: https://github.com/openclaw/openclaw
 - GitHub issues/comments/PR comments: use literal multiline strings or `-F - <<'EOF'` (or $'...') for real newlines; never embed "\\n".
 
