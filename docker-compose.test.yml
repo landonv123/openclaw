@@ -1,0 +1,28 @@
+services:
+  openclaw-test:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    environment:
+      HOME: /home/node
+      TERM: xterm-256color
+      # Point OpenClaw to the mounted config directory
+      OPENCLAW_CONFIG_DIR: /home/node/.openclaw
+    volumes:
+      # Mount source code for live feedback
+      - ./:/app
+      # Mount local dev data for credentials (read/write so we can save auth)
+      - ./.dev-data:/home/node/.openclaw
+      # Anonymous volumes for node_modules to properly utilize container's installed deps
+      # while allowing local overrides if needed (though usually we want container deps)
+      - /app/node_modules
+    # CRITICAL: Resource limits to prevent host crash
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+    # Keep container running for interactive shell if needed
+    stdin_open: true
+    tty: true
+    command: pnpm test:fast

@@ -31,7 +31,6 @@ export function createVpsAwareOAuthHandlers(params: {
             validate: validateRequiredInput,
           })
           .then((value) => String(value));
-        return;
       }
 
       params.spin.update(params.localBrowserMessage);
